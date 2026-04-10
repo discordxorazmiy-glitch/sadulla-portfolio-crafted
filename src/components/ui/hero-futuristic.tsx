@@ -150,6 +150,19 @@ export const HeroFuturistic = () => {
   const [subtitleVisible, setSubtitleVisible] = useState(false);
   const [delays, setDelays] = useState<number[]>([]);
   const [subtitleDelay, setSubtitleDelay] = useState(0);
+  const [webGPUSupported, setWebGPUSupported] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    const checkWebGPU = async () => {
+      if (!navigator.gpu) {
+        setWebGPUSupported(false);
+        return;
+      }
+      const adapter = await navigator.gpu.requestAdapter();
+      setWebGPUSupported(!!adapter);
+    };
+    checkWebGPU();
+  }, []);
 
   useEffect(() => {
     setDelays(titleWords.map(() => Math.random() * 0.07));
@@ -168,6 +181,15 @@ export const HeroFuturistic = () => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-background">
+      {/* Fallback background for no WebGPU */}
+      {webGPUSupported === false && (
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-secondary/10 rounded-full blur-[120px] animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-accent/5 rounded-full blur-[80px] animate-pulse" style={{ animationDelay: '2s' }} />
+        </div>
+      )}
+
       <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
         <div className="text-center">
           <div className="flex flex-wrap justify-center gap-4">
@@ -208,18 +230,20 @@ export const HeroFuturistic = () => {
         </svg>
       </div>
 
-      <Canvas
-        className="absolute inset-0"
-        // @ts-ignore - WebGPU renderer async init
-        gl={async (props: any) => {
-          const renderer = new THREE.WebGPURenderer(props as any);
-          await renderer.init();
-          return renderer;
-        }}
-      >
-        <Scene />
-        <PostProcessing />
-      </Canvas>
+      {webGPUSupported && (
+        <Canvas
+          className="absolute inset-0"
+          // @ts-ignore - WebGPU renderer async init
+          gl={async (props: any) => {
+            const renderer = new THREE.WebGPURenderer(props as any);
+            await renderer.init();
+            return renderer;
+          }}
+        >
+          <Scene />
+          <PostProcessing />
+        </Canvas>
+      )}
     </div>
   );
 };
