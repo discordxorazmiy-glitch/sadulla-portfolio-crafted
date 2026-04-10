@@ -138,4 +138,12 @@ export const translations = {
   },
 } as const;
 
-export type Translations = typeof translations.en;
+export type Translations = {
+  nav: { about: string; skills: string; projects: string; contact: string };
+  hero: { greeting: string; name: string; role: string; description: string; viewProjects: string; contactMe: string };
+  about: { title: string; p1: string; p2: string; p3: string; age: string; location: string; focus: string; focusValue: string; locationValue: string };
+  skills: { title: string; subtitle: string };
+  projects: { title: string; subtitle: string; liveDemo: string; github: string };
+  contact: { title: string; subtitle: string; name: string; email: string; message: string; send: string; sending: string };
+  footer: { rights: string; builtWith: string };
+};
