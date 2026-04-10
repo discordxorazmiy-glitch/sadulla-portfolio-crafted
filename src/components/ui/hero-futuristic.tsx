@@ -5,6 +5,7 @@ import { useAspect, useTexture } from '@react-three/drei';
 import { useMemo, useRef, useState, useEffect } from 'react';
 import * as THREE from 'three/webgpu';
 import { bloom } from 'three/examples/jsm/tsl/display/BloomNode.js';
+import { useLanguage } from '@/i18n/LanguageContext';
 
 import {
   abs,
@@ -144,10 +145,11 @@ const Scene = () => {
 };
 
 export const HeroFuturistic = () => {
-  const titleWords = 'Build Your Dreams'.split(' ');
-  const subtitle = 'AI-powered creativity for the next generation.';
+  const { t } = useLanguage();
+  const nameWords = t.hero.name.split(' ');
   const [visibleWords, setVisibleWords] = useState(0);
   const [subtitleVisible, setSubtitleVisible] = useState(false);
+  const [buttonsVisible, setButtonsVisible] = useState(false);
   const [delays, setDelays] = useState<number[]>([]);
   const [subtitleDelay, setSubtitleDelay] = useState(0);
   const [webGPUSupported, setWebGPUSupported] = useState<boolean | null>(null);
@@ -165,23 +167,29 @@ export const HeroFuturistic = () => {
   }, []);
 
   useEffect(() => {
-    setDelays(titleWords.map(() => Math.random() * 0.07));
+    setDelays(nameWords.map(() => Math.random() * 0.07));
     setSubtitleDelay(Math.random() * 0.1);
-  }, [titleWords.length]);
+  }, [nameWords.length]);
 
   useEffect(() => {
-    if (visibleWords < titleWords.length) {
+    if (visibleWords < nameWords.length) {
       const timeout = setTimeout(() => setVisibleWords(visibleWords + 1), 600);
       return () => clearTimeout(timeout);
     } else {
       const timeout = setTimeout(() => setSubtitleVisible(true), 800);
       return () => clearTimeout(timeout);
     }
-  }, [visibleWords, titleWords.length]);
+  }, [visibleWords, nameWords.length]);
+
+  useEffect(() => {
+    if (subtitleVisible) {
+      const timeout = setTimeout(() => setButtonsVisible(true), 600);
+      return () => clearTimeout(timeout);
+    }
+  }, [subtitleVisible]);
 
   return (
     <div className="relative w-full h-screen overflow-hidden bg-background">
-      {/* Fallback background for no WebGPU */}
       {webGPUSupported === false && (
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-primary/10 rounded-full blur-[100px] animate-pulse" />
@@ -191,12 +199,14 @@ export const HeroFuturistic = () => {
       )}
 
       <div className="absolute inset-0 flex flex-col items-center justify-center z-10 pointer-events-none">
-        <div className="text-center">
+        <div className="text-center space-y-4">
+          <p className="text-muted-foreground text-lg">{t.hero.greeting}</p>
+
           <div className="flex flex-wrap justify-center gap-4">
-            {titleWords.map((word, index) => (
+            {nameWords.map((word, index) => (
               <span
                 key={index}
-                className="text-5xl md:text-7xl font-bold text-foreground transition-all duration-700"
+                className="text-5xl md:text-7xl font-bold gradient-text transition-all duration-700"
                 style={{
                   opacity: index < visibleWords ? 1 : 0,
                   transform: index < visibleWords ? 'translateY(0)' : 'translateY(20px)',
@@ -207,19 +217,49 @@ export const HeroFuturistic = () => {
               </span>
             ))}
           </div>
-        </div>
 
-        <div className="mt-6">
           <p
-            className="text-lg md:text-xl text-muted-foreground transition-all duration-700"
+            className="text-xl md:text-2xl text-primary font-mono transition-all duration-700"
             style={{
-              opacity: subtitleVisible ? 1 : 0,
+              opacity: subtitleVisible ? 0.9 : 0,
               transform: subtitleVisible ? 'translateY(0)' : 'translateY(10px)',
               transitionDelay: `${subtitleDelay}s`,
             }}
           >
-            {subtitle}
+            &lt; {t.hero.role} /&gt;
           </p>
+
+          <p
+            className="text-muted-foreground max-w-lg mx-auto leading-relaxed transition-all duration-700"
+            style={{
+              opacity: subtitleVisible ? 1 : 0,
+              transform: subtitleVisible ? 'translateY(0)' : 'translateY(10px)',
+            }}
+          >
+            {t.hero.description}
+          </p>
+
+          <div
+            className="flex flex-wrap justify-center gap-4 pt-4 pointer-events-auto transition-all duration-700"
+            style={{
+              opacity: buttonsVisible ? 1 : 0,
+              transform: buttonsVisible ? 'translateY(0)' : 'translateY(10px)',
+            }}
+          >
+            <a
+              href="#projects"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-sm transition-all duration-300 hover:scale-105"
+              style={{ background: 'var(--gradient-primary)', color: 'hsl(var(--primary-foreground))' }}
+            >
+              {t.hero.viewProjects}
+            </a>
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium text-sm border border-border text-foreground hover:border-primary/50 transition-all duration-300 hover:scale-105"
+            >
+              {t.hero.contactMe}
+            </a>
+          </div>
         </div>
       </div>
 
