@@ -1,0 +1,141 @@
+export type Language = "en" | "ru" | "uz";
+
+export const translations = {
+  en: {
+    nav: { about: "About", skills: "Skills", projects: "Projects", contact: "Contact" },
+    hero: {
+      greeting: "Hi, I'm",
+      name: "Sadulla Rashidov",
+      role: "Frontend Developer",
+      description: "I build fast, modern, and responsive websites with clean code and pixel-perfect design. Passionate about creating exceptional digital experiences.",
+      viewProjects: "View Projects",
+      contactMe: "Contact Me",
+    },
+    about: {
+      title: "About Me",
+      p1: "I'm a 17-year-old frontend developer from Khorezm, Uzbekistan with a deep passion for building beautiful and performant web applications.",
+      p2: "I specialize in crafting responsive, accessible, and visually stunning user interfaces using modern technologies. Every line of code I write is aimed at delivering the best possible user experience.",
+      p3: "When I'm not coding, I'm learning new frameworks, contributing to open source, and exploring the latest trends in web development.",
+      age: "Age",
+      location: "Location",
+      focus: "Focus",
+      focusValue: "Frontend Dev",
+      locationValue: "Khorezm, UZ",
+    },
+    skills: {
+      title: "Skills & Technologies",
+      subtitle: "Technologies I work with to bring ideas to life",
+    },
+    projects: {
+      title: "Featured Projects",
+      subtitle: "A selection of my recent work",
+      liveDemo: "Live Demo",
+      github: "GitHub",
+    },
+    contact: {
+      title: "Get In Touch",
+      subtitle: "Have a project in mind? Let's work together.",
+      name: "Your Name",
+      email: "Your Email",
+      message: "Your Message",
+      send: "Send Message",
+      sending: "Sending...",
+    },
+    footer: {
+      rights: "All rights reserved.",
+      builtWith: "Built with",
+    },
+  },
+  ru: {
+    nav: { about: "Обо мне", skills: "Навыки", projects: "Проекты", contact: "Контакт" },
+    hero: {
+      greeting: "Привет, я",
+      name: "Садулла Рашидов",
+      role: "Фронтенд Разработчик",
+      description: "Я создаю быстрые, современные и адаптивные веб-сайты с чистым кодом и идеальным дизайном. Увлечён созданием исключительных цифровых решений.",
+      viewProjects: "Мои проекты",
+      contactMe: "Связаться",
+    },
+    about: {
+      title: "Обо мне",
+      p1: "Я 17-летний фронтенд-разработчик из Хорезма, Узбекистан, увлечённый созданием красивых и производительных веб-приложений.",
+      p2: "Я специализируюсь на создании адаптивных, доступных и визуально привлекательных интерфейсов с использованием современных технологий.",
+      p3: "Когда я не пишу код, я изучаю новые фреймворки, участвую в open source и слежу за последними трендами веб-разработки.",
+      age: "Возраст",
+      location: "Локация",
+      focus: "Фокус",
+      focusValue: "Фронтенд",
+      locationValue: "Хорезм, УЗ",
+    },
+    skills: {
+      title: "Навыки и технологии",
+      subtitle: "Технологии, с которыми я работаю",
+    },
+    projects: {
+      title: "Избранные проекты",
+      subtitle: "Подборка моих последних работ",
+      liveDemo: "Демо",
+      github: "GitHub",
+    },
+    contact: {
+      title: "Свяжитесь со мной",
+      subtitle: "Есть проект? Давайте работать вместе.",
+      name: "Ваше имя",
+      email: "Ваш Email",
+      message: "Ваше сообщение",
+      send: "Отправить",
+      sending: "Отправка...",
+    },
+    footer: {
+      rights: "Все права защищены.",
+      builtWith: "Сделано с",
+    },
+  },
+  uz: {
+    nav: { about: "Men haqimda", skills: "Ko'nikmalar", projects: "Loyihalar", contact: "Aloqa" },
+    hero: {
+      greeting: "Salom, men",
+      name: "Sadulla Rashidov",
+      role: "Frontend Dasturchi",
+      description: "Men tez, zamonaviy va moslashuvchan veb-saytlarni toza kod va mukammal dizayn bilan yarataman. Raqamli tajribalar yaratishga ishtiyoqman.",
+      viewProjects: "Loyihalarni ko'rish",
+      contactMe: "Bog'lanish",
+    },
+    about: {
+      title: "Men haqimda",
+      p1: "Men Xorazm, O'zbekistonlik 17 yoshli frontend dasturchi bo'lib, chiroyli va samarali veb-ilovalar yaratishga ishtiyoqman.",
+      p2: "Men zamonaviy texnologiyalar yordamida moslashuvchan, qulay va vizual jihatdan ajoyib foydalanuvchi interfeyslarini yaratishga ixtisoslashganman.",
+      p3: "Kod yozmaganim vaqtda yangi frameworklarni o'rganaman, open source loyihalarga hissa qo'shaman va veb-dasturlash sohasidagi eng so'nggi trendlarni kuzataman.",
+      age: "Yosh",
+      location: "Joylashuv",
+      focus: "Yo'nalish",
+      focusValue: "Frontend",
+      locationValue: "Xorazm, UZ",
+    },
+    skills: {
+      title: "Ko'nikmalar va texnologiyalar",
+      subtitle: "G'oyalarni hayotga tatbiq etish uchun ishlatiladigan texnologiyalar",
+    },
+    projects: {
+      title: "Tanlangan loyihalar",
+      subtitle: "So'nggi ishlarimdan namunalar",
+      liveDemo: "Demo",
+      github: "GitHub",
+    },
+    contact: {
+      title: "Bog'laning",
+      subtitle: "Loyihangiz bormi? Keling, birga ishlaylik.",
+      name: "Ismingiz",
+      email: "Emailingiz",
+      message: "Xabaringiz",
+      send: "Xabar yuborish",
+      sending: "Yuborilmoqda...",
+    },
+    footer: {
+      rights: "Barcha huquqlar himoyalangan.",
+      builtWith: "Yaratilgan",
+    },
+  },
+} as const;
+
+export type Translations = typeof translations.en;
