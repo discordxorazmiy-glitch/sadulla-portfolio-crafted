@@ -97,6 +97,7 @@ const Scene = () => {
     const dist = float(tiledUv.length());
     const dot = float(smoothstep(0.5, 0.49, dist)).mul(brightness);
     const depth = tDepthMap;
+    // @ts-ignore - experimental WebGPU TSL types
     const flow = oneMinus(smoothstep(0, 0.02, abs(depth.sub(uProgress))));
     const mask = dot.mul(flow).mul(vec3(10, 0, 0));
     const final = blendScreen(tMap, mask);
@@ -190,6 +191,7 @@ export const Demo = () => {
 
       <Canvas
         className="absolute inset-0"
+        // @ts-ignore - WebGPU renderer async init
         gl={async (props: any) => {
           const renderer = new THREE.WebGPURenderer(props as any);
           await renderer.init();
